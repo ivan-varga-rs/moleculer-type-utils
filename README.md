@@ -139,9 +139,10 @@ Ok here is the receipt:
 #### Typed Context
 
   Typed Context is a bit tricky compared to broker, because
-  context has generics. So to leave original functionality
+  context has generics. Type definitions differ in moleculer v0.14 and v0.15. So to leave original functionality
   of Context intact, we need to do like this (in `types/my-context.ts` for example):
 
+In moleculer v0.14 and below:
   ```typescript
     // We need this for default GenericObject generic
     import { GenericObject } from "moleculer";
@@ -153,6 +154,16 @@ Ok here is the receipt:
 
   ```
 
+In moleculer v0.15:
+  ```typescript
+    // No need for GenericObject anymore as the context doesn't use it anymore
+    import { BetterTypedContext } from "moleculer-type-utils";
+
+    // As in Typed Broker manual step 3, you need to obtain your service definitions.
+
+    type TestContext<P = unknown, M extends object = NonNullable<unknown>, L = Record<string, any>> = BetterTypedContext<ServiceDefinitions, P, M, L>;
+
+  ```
   Use it like this in your services:
 
   ```typescript
