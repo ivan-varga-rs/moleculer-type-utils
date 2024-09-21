@@ -1,7 +1,6 @@
 import { expectType, expectError } from "tsd";
 import { BetterTypedServiceBroker } from "./types/broker";
 import { BetterTypedContext } from "./types/context";
-import { GenericObject } from "moleculer";
 
 type ServiceDefinitions = [
   typeof import("./tests/test-data/moleculer-services/service-alpha").default,
@@ -44,7 +43,7 @@ expectError(broker.call("service:alpha.alphaActionWithoutParamsAndMeta", {}, { m
 
 // Testing context
 
-type TestContext<P = unknown, M extends object = {}, L = GenericObject> = BetterTypedContext<ServiceDefinitions, P, M, L>;
+type TestContext<P = unknown, M extends object = {}, L = Record<string, any>> = BetterTypedContext<ServiceDefinitions, P, M, L>;
 
 const ctx = {} as TestContext;
 

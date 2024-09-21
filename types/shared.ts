@@ -1,4 +1,4 @@
-import type { GenericObject, ServiceSchema } from "moleculer"
+import type {  ServiceSchema } from "moleculer"
 
 export type ServiceSchemaTuple = ServiceSchema[];
 
@@ -15,7 +15,7 @@ export type EmptyObject = {
   [key in any]: never
 };
 
-export interface ContextLike<P = unknown, M extends object = {}, L = GenericObject> {
+export interface ContextLike<P = unknown, M extends object = {}, L = Record<string, any>> {
   params: P
   meta: M
   locals: L
