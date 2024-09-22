@@ -35,8 +35,8 @@ type ServiceBrokerCallDefinitionForActionInfo<TServiceSchema extends ServiceSche
       // Meaning IsOptionalType<unknown> = false. Which means
       // params will be *required* parameter. Which we do not want
       // because if params were inferred as unknown - no types were
-      // defined by developer for params. 
-      params: IsRequiredType<P> extends true ? P : null | undefined, 
+      // defined by developer for params.
+      params: IsRequiredType<P> extends true ? P : null | undefined,
       meta: M,
       promise: L,
       returnType: R,
@@ -48,19 +48,19 @@ type ServiceBrokerCallDefinitionForActionInfo<TServiceSchema extends ServiceSche
     }
       ?
       {
-        params: IsRequiredType<P2> extends true ? P2 : null | undefined, 
+        params: IsRequiredType<P2> extends true ? P2 : null | undefined,
         meta: M2,
         promise: L2,
         returnType: R2,
         actionName: FullServiceActionName<TServiceSchema, TActionName>
-      }     
+      }
       :
       never;
 
 type BrokerDefinitionFromSchemaTuple<TSchemaTuple extends ServiceSchemaTuple> = {
   call: BrokerCallFunctionDefinitionFromSchemaTuple<TSchemaTuple>
 }
-  
+
 type TupleOfFullDefinitions<TSchemaTuple extends ServiceSchemaTuple> =
   TupleOfSchemasToTupleOfFullDefinitions<TSchemaTuple>;
 
@@ -101,7 +101,7 @@ type BrokerCallFunctionDefinition<TFullNameDefinitions extends BrokerCallDefinit
         [
           params: IsOptionalType<TFullNameDefinitions[TAction]["params"]> extends false ? TFullNameDefinitions[TAction]["params"] : any,
           opts: {
-            meta: TFullNameDefinitions[TAction]["meta"]
+            meta?: TFullNameDefinitions[TAction]["meta"]
           } & CallingOptions
         ]
         :
@@ -116,7 +116,7 @@ type BrokerCallFunctionDefinition<TFullNameDefinitions extends BrokerCallDefinit
             [
               params?: TFullNameDefinitions[TAction]["params"],
               opts?: CallingOptions
-            ]           
+            ]
         )
     )
   ) => PromisifyIfNotPromise<TFullNameDefinitions[TAction]["returnType"]>;
