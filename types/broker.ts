@@ -93,30 +93,30 @@ export type BrokerCallFunctionDefinitionFromSchemaTuple<TSchemaTuple extends Ser
 >;
 
 type BrokerCallFunctionDefinition<TFullNameDefinitions extends BrokerCallDefinitionsForServiceWithFullName<TServiceSchema>, TServiceSchema extends ServiceSchema = ServiceSchema> =
-    <TAction extends keyof TFullNameDefinitions>(
-        actionName: TAction,
-        ...args: (
-            IsOptionalType<TFullNameDefinitions[TAction]["meta"]> extends false
-                ?
-                [
-                    params: IsOptionalType<TFullNameDefinitions[TAction]["params"]> extends false ? TFullNameDefinitions[TAction]["params"] : any,
-                    opts?: {
-                        meta?: TFullNameDefinitions[TAction]["meta"]
-                    } & CallingOptions
-                ]
-                :
-                (
-                    IsOptionalType<TFullNameDefinitions[TAction]["params"]> extends false
-                        ?
-                        [
-                            params: TFullNameDefinitions[TAction]["params"],
-                            opts?: CallingOptions // Make opts optional
-                        ]
-                        :
-                        [
-                            params?: TFullNameDefinitions[TAction]["params"],
-                            opts?: CallingOptions // Make opts optional
-                        ]
-                    )
-            )
-    ) => PromisifyIfNotPromise<TFullNameDefinitions[TAction]["returnType"]>;
+  <TAction extends keyof TFullNameDefinitions>(
+    actionName: TAction,
+    ...args: (
+      IsOptionalType<TFullNameDefinitions[TAction]["meta"]> extends false
+        ?
+        [
+          params: IsOptionalType<TFullNameDefinitions[TAction]["params"]> extends false ? TFullNameDefinitions[TAction]["params"] : any,
+          opts: {
+            meta?: TFullNameDefinitions[TAction]["meta"]
+          } & CallingOptions
+        ]
+        :
+        (
+          IsOptionalType<TFullNameDefinitions[TAction]["params"]> extends false
+            ?
+            [
+              params: TFullNameDefinitions[TAction]["params"],
+              opts?: CallingOptions
+            ]
+            :
+            [
+              params?: TFullNameDefinitions[TAction]["params"],
+              opts?: CallingOptions
+            ]
+        )
+    )
+  ) => PromisifyIfNotPromise<TFullNameDefinitions[TAction]["returnType"]>;
